@@ -11,7 +11,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Edit, Trash2, Eye, Star, PlusCircle } from "lucide-react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+
+import { Edit, Trash2,  Star, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import DeleteProduct from "@/CallApi/DeleteProduct";
 import Link from "next/link";
@@ -22,7 +34,7 @@ import { motion } from "framer-motion";
 export default function ShowAll() {
   const [AllData, setAllData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+ const [open, setOpen] = useState(false)
   async function GetData() {
     try {
       const data = await AllProducts();
@@ -89,7 +101,7 @@ export default function ShowAll() {
             transition={{ delay: index * 0.08, duration: 0.5 }}
             className="group"
           >
-            <Card className="shadow-md hover:shadow-lg  hover:bg-slate-300 shadow-slate-200 transition-all duration-500 border rounded-2xl overflow-hidden">
+            <Card className="  hover:shadow-lg hover:shadow-orange-400 hover:bg-slate-300 shadow-slate-200 transition-all duration-500 border rounded-2xl overflow-hidden">
               <CardHeader className="text-center">
                 <CardTitle className="text-lg font-bold text-slate-800">
                   {item.product_name}
@@ -112,17 +124,56 @@ export default function ShowAll() {
                   
 
                     <Link href={`/updateproduct/${item.product_id}`}>
-                      <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+                      <button className="p-2 rounded-full bg-gray-100 cursor-pointer hover:bg-gray-200">
                         <Edit className="w-5 h-5 text-green-600" />
                       </button>
                     </Link>
 
-                    <button
-                      onClick={() => Delete(item.product_id)}
-                      className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
-                    >
-                      <Trash2 className="w-5 h-5 text-red-600" />
-                    </button>
+              
+
+
+   <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+        className={"cursor-pointer"}
+          variant="ghost"
+          size="icon"
+          onClick={() => setOpen(true)}
+        >
+          <Trash2 className="text-red-600" />
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className={""}>
+        <DialogHeader>
+          <DialogTitle>هل أنت متأكد؟</DialogTitle>
+          <DialogDescription>
+            سيتم حذف هذا المنتج نهائيًا ولا يمكن التراجع عن ذلك.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter className="flex justify-end gap-2">
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            إلغاء
+          </Button>
+          <Button
+          className={"cursor-pointer"}
+            variant="destructive"
+            onClick={() => {
+             Delete(item.product_id)
+              setOpen(false)
+            }}
+          >
+            تأكيد الحذف
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+
+
+
+
+
                   </div>
                 </CardAction>
               </CardHeader>
