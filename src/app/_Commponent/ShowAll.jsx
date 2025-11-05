@@ -110,7 +110,7 @@ export default function ShowAll() {
                 <CardDescription>
               <div className="relative w-[200px] h-[200px] overflow-hidden rounded-lg">
   <Image
-    src={item.product_image?.[0]?.image_url}
+    src={item.product_image?.[0]?.image_url || "/tangy-ranch-beef-burger-beef-burger_960396-205482.jpg"}
     fill
     className="object-cover transition-transform duration-700 group-hover:scale-110"
     alt={item.product_name}
