@@ -131,7 +131,7 @@ export default function ShowAll() {
 
 
 
-  <DialogTrigger className="cursor-pointer w-full">
+  <DialogTrigger  className="cursor-pointer w-full">
 
    <Card className="hover:shadow-2xl hover:shadow-orange-400/30 shadow-md shadow-slate-800 transition-all duration-500 border rounded-2xl overflow-hidden bg-slate-200">
                 <CardHeader className="text-center">
@@ -161,7 +161,6 @@ export default function ShowAll() {
                         </button>
                       </Link>
 
-                      {/* Dialog خاص بكل منتج */}
                       <Dialog
                         open={
                           open && selectedProduct === item.product_id
@@ -242,8 +241,7 @@ export default function ShowAll() {
 
 
 
-
-  <DialogContent>
+{open? "":  <DialogContent>
     <DialogHeader>
       <DialogTitle className={"text-center"}>
 <h1 className="text-2xl font-bold text-orange-700">{item.product_name}</h1>
@@ -280,7 +278,11 @@ export default function ShowAll() {
     </Carousel>
       </DialogDescription>
     </DialogHeader>
-  </DialogContent>
+  </DialogContent>}
+
+
+
+
 </Dialog>
 
 
